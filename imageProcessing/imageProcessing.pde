@@ -1,8 +1,11 @@
-/*String[]names;
+String[]names;
 Kernel[]kernels;
 int currentKernel;
+PImage car;
+PImage output;
 
 void setup(){
+  size(1450,500);
   currentKernel = 0;
   names = new String[]{
     "Identity", "Blur", "Sharpen",
@@ -52,11 +55,28 @@ void setup(){
       {0, 1, 2}
     })
   };
-}*/
+}
+
+void keyPressed(){
+  if (currentKernel == 7){
+    currentKernel = 0;
+  }
+  currentKernel++;
+  Kernel k = kernels[currentKernel];
+  k.apply(car,output);
+}
+
+void draw(){
+  size(1450,500);
+  PImage car = loadImage("redcar.png");
+  PImage output = car.copy();
+  image(car,0,0);
+  image(output,car.width,0);
+}
  
  
  
- void setup(){
+ /*void setup(){
       size(1450,500);
       PImage car = loadImage("redcar.png");
       PImage output = car.copy();
@@ -73,4 +93,4 @@ void setup(){
       k.apply(car,output);
       image(car,0,0);
       image(output,car.width,0);
-    }
+    }*/

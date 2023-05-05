@@ -74,9 +74,11 @@ void draw(){
   fill(40);
   stroke(40);
   rect(762, 0, 300, 35);
+  rect(0, 0, 175, 35);
   fill(255);
   textSize(25);
-  text("Current Kernel: " + names[currentKernel], 770, 25); 
+  text("Current Kernel: " + names[currentKernel], 770, 25);
+  text("Original Picture" , 5, 25); 
   
 }
  

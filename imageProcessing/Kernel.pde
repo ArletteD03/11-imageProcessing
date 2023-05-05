@@ -34,7 +34,10 @@
             }
           }
         }
-        return color((int) red(origC), (int) green(origC), (int) blue(origC));       
+        int r = constrain((int) red(origC), 0, 255);
+        int g = constrain((int) green(origC), 0, 255);
+        int b = constrain((int) blue(origC), 0, 255);      
+        return color(r, g, b);       
       }
      }
 
@@ -45,10 +48,8 @@
         for (int i = 0; i < source.height; i++) {
          for (int j = 0; j < source.width; j++) {
            color newC = calcNewColor(source, j, i);
-           destination.set(i,j, newC);
-           //destination.pixels[j + i * source.width] = newC;
+           destination.set(j,i, newC);
           }
         }
-        destination.updatePixels();
       }
     }

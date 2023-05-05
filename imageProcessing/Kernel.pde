@@ -25,26 +25,19 @@
           return color(0);
         }
         else{
-          color c = color(0);
-          for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-              int x = img.width + i;
-              int y = img.height + j;
-              if (x >= 0 && x < img.width && y >= 0 && y < img.height) {
-                int idx = px + py * w;
-                float k = kernel[i+1][j+1];
-                c += k * img.pixels[idx];
-              }
+          color origC = color(0);
+          for (int i = -1; i <= 1; i++){
+            for (int j = -1; j <= 1; j++){
+              if (x + i >= 0 && x + i < img.width && y + j >= 0 && y + j < img.height){
+              float k = kernel[i+1][j+1];
+              origC += k * img.get(x + i, y + j);
             }
           }
-          int r = (int) red(c);
-          int g = (int) green(c);
-          int b = (int) blue(c);
-          r = constrain(r, 0, 255);
-          g = constrain(g, 0, 255);
-          b = constrain(b, 0, 255);
-          return color(r, g, b);
+        }
+        return color((int) red(origC), (int) green(origC), (int) blue(origC));       
       }
+     }
+
 
       /**You must write this method that applies the kernel to the source,
       *and saves the data to the destination.*/
@@ -52,7 +45,8 @@
         for (int i = 0; i < source.height; i++) {
          for (int j = 0; j < source.width; j++) {
            color newC = calcNewColor(source, j, i);
-           destination.pixels[j + i * source.width] = newC;
+           destination.set(i,j, newC);
+           //destination.pixels[j + i * source.width] = newC;
           }
         }
         destination.updatePixels();

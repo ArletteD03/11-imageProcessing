@@ -6,6 +6,8 @@ PImage output;
 
 void setup(){
   size(1450,500);
+  car = loadImage("redcar.png");
+  output = car.copy();
   currentKernel = 0;
   names = new String[]{
     "Identity", "Blur", "Sharpen",
@@ -67,11 +69,15 @@ void keyPressed(){
 }
 
 void draw(){
-  size(1450,500);
-  PImage car = loadImage("redcar.png");
-  PImage output = car.copy();
   image(car,0,0);
   image(output,car.width,0);
+  fill(40);
+  stroke(40);
+  rect(762, 0, 300, 35);
+  fill(255);
+  textSize(25);
+  text("Current Kernel: " + names[currentKernel], 770, 25); 
+  
 }
  
  

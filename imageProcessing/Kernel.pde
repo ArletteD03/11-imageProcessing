@@ -5,12 +5,7 @@
       *This implementation only allows 3x3 kernels
       */
       public Kernel(float[][]init) {
-        kernel = new float[3][3];
-        for (int i = 0; i < 3; i++) {
-          for (int j = 0; j < 3; j++) {
-            kernel[i][j] = init[i][j];
-          }
-        }
+        kernel = init;
       }
 
       /**If part of the kernel is off of the image, return black, Otherwise
@@ -25,19 +20,24 @@
           return color(0);
         }
         else{
-          color origC = color(0);
-          for (int i = -1; i <= 1; i++){
-            for (int j = -1; j <= 1; j++){
-              if (x + i >= 0 && x + i < img.width && y + j >= 0 && y + j < img.height){
-              float k = kernel[i+1][j+1];
-              origC += k * img.get(x + i, y + j);
+          int red = 0;
+          int green = 0;
+          int blue = 0;
+          for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+              int xCoor = (x-1) + j;
+              int yCoor = (y-1) + i;
+              float kern = kernel[i][j];
+              color newC = img.get(xCoor, yCoor);
+              red += (int) red(newC) * kern;
+              green += (int) green(newC) * kern;
+              blue += (int) blue(newC) * kern;
             }
           }
-        }
-        int r = constrain((int) red(origC), 0, 255);
-        int g = constrain((int) green(origC), 0, 255);
-        int b = constrain((int) blue(origC), 0, 255);      
-        return color(r, g, b);       
+        red = constrain(red, 0, 255);
+        green = constrain(green, 0, 255);
+        blue = constrain(blue, 0, 255);
+        return color(red, green, blue);     
       }
      }
 
@@ -51,5 +51,5 @@
            destination.set(j,i, newC);
           }
         }
-      }
+      }   
     }
